@@ -28,3 +28,20 @@ Converts video links (no example yet) into HTML to paste into HorN.
 ### audio.py
 
 Converts audio links (no example yet) into HTML to paste into HorN.
+
+
+
+
+
+
+
+
+# What's next?
+
+## More HTML tricks
+
+I want to implement bold text and so on.
+
+## Bot examples
+
+When i eventually figure out how to make bots, I want to make some examples for people to use.
