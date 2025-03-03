@@ -6,9 +6,6 @@ This is not official in any way.
 
 ## html
 
-HTML injection stuff.
-
-
 ### image.py
 
 Converts image links (such as https://i.imgur.com/7x9ejFZ.png) into HTML to paste into HorN.
