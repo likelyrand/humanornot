@@ -19,6 +19,7 @@ for ext in audio_ext:
 for ext in video_ext:
     valid_ext = valid_ext + ", " + ext
 
+print("Version 1.0.0")
 print("To use this tool, you need to paste a valid link, you can paste it with or without the https:// part.")
 print(f"\nValid links end in one of these: {valid_ext}")
 print("\nExample: https://i.imgur.com/7x9ejFZ.png")
