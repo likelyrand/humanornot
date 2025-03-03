@@ -6,7 +6,8 @@ This is not official in any way.
 
 ## html
 
-These convert links into HTML to paste into HorN.
+These files convert links into HTML to paste into HorN.
+They will be updated in the future.
 > [!WARNING]
 > HTML injection may be patched in the future, so this may not work.
 
