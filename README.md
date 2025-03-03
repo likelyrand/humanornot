@@ -11,6 +11,11 @@ They will be updated in the future.
 > [!WARNING]
 > HTML injection may be patched in the future, so this may not work.
 
+### universal.py
+
+Converts any valid link into HTML to paste into HorN.
+Works for images, audio and videos. When more testing is done, more file extensions will be supported.
+
 ### image.py
 
 Converts image links (such as https://i.imgur.com/7x9ejFZ.png) into HTML to paste into HorN.
