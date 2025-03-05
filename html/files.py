@@ -4,12 +4,10 @@
 import os
 import pyimgur
 
-# Replace with your client ID
-CLIENT_ID = "YOUR_CLIENT_ID"
+CLIENT_ID = "842a87df02ef887"
 
 # We will need this to upload the files
 im = pyimgur.Imgur(CLIENT_ID)
-
 
 # All the valid extensions, the for loops are a bit of mess
 # When more testing is done, i will update the extension list.
@@ -44,50 +42,63 @@ print("\nExample: C:\\path\\to\\file.png")
 def convert():
 
     error = False
+    no_files = False
 
     path = input("\n\nFull path to fiie: ")
     print(" ")
 
-    # Sometimes it won't work when there is only 1 backslash
-    path.replace("\\", "\\\\")
+    path.replace("/", "\\")
+
+    # Windows "Copy Path" adds quotes by default, so we should remove them
+    path.replace('"', "")
+    path.replace("'", "")
 
     # List of files to upload, the below if statements will fill this list
     to_upload = []
 
-    # If path is a folder, loop through all the files there and add them to the list
-    if os.path.isdir(path):
+    # If the path even exists
+    if path != "" and os.path.exists(path):
 
-        for file in os.listdir(path):
+        # If path is a folder, loop through all the files there and add them to the list
+        if os.path.isdir(path):
 
-            filename = os.fsdecode(file)
-            valid = False
+            any = False
+
+            for file in os.listdir(path):
+
+                filename = os.fsdecode(file)
+                valid = False
+
+                for ext in all_ext:
+
+                    if filename.endswith(ext):
+
+                        valid = True
+                        any = True
+                
+                if valid:
+                    to_upload.insert(len(to_upload), path+"\\\\"+file)
+            
+            if not any:
+                no_files = True
+        
+        # Else if path is a file, add it to the list
+        elif os.path.isfile(path):
 
             for ext in all_ext:
-
-                if filename.endswith(ext):
-
+                if path.endswith(ext):
                     valid = True
                 
             if valid:
-                to_upload.insert(len(to_upload), path+"\\\\"+file)
-        
-    # Else if path is a file, add it to the list
-    elif os.path.isfile(path):
+                to_upload.insert(len(to_upload), path)
+            else:
+                no_files = True
 
-        for ext in all_ext:
-            if path.endswith(ext):
-                valid = True
-                
-        if valid:
-            to_upload.insert(len(to_upload), path)
-
-    else:
-        print("Invalid path!")
-        error = True
+        else:
+            error = True
     
     # If no files to upload
-    if not to_upload[0]:
-        print("Invalid path!")
+    if len(to_upload) == 0:
         error = True
     
     for file in to_upload:
@@ -109,17 +120,17 @@ def convert():
         # Images
         for ext in image_ext:
             if url.endswith(ext):
-                output = f'&ltimg src&#61"https:////{url}"&gt'
+                output = f'&ltimg src&#61"//{url}"&gt'
 
         # Audio
         for ext in audio_ext:
             if url.endswith(ext):
-                output = f'&ltaudio controls autoplay&gt &ltsource src&#61"https:////{url}" &lt/audio&gt'
+                output = f'&ltaudio controls autoplay&gt &ltsource src&#61"//{url}" &lt/audio&gt'
 
         #Videos
         for ext in video_ext:
             if url.endswith(ext):
-                output = f'&ltvideo autoplay &ltsource src&#61"https:////{url}"›&lt/video&gt'
+                output = f'&ltvideo autoplay &ltsource src&#61"//{url}"›&lt/video&gt'
 
         # Check if link was valid
         if output != "":
@@ -135,7 +146,10 @@ def convert():
             convert()
 
     if error:
-        print("Invalid path!")
+        if no_files:
+            print("Path is either not a valid file or there are no valid files in path!")
+        else:
+            print("Invalid path!")
         convert()
 
 # Call the function, otherwise nothing will happen
