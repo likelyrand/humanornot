@@ -4,7 +4,7 @@
 import os
 import pyimgur
 
-CLIENT_ID = "842a87df02ef887"
+CLIENT_ID = "YOUR_CLIENT_ID"
 
 # We will need this to upload the files
 im = pyimgur.Imgur(CLIENT_ID)
