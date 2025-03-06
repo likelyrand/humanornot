@@ -2,7 +2,7 @@
 
 APP_TITLE = "Files and links into HoN HTML"
 
-IMGUR_CLIENT_ID = "YOUR_CLIENT_ID"
+IMGUR_CLIENT_ID = "842a87df02ef887"
 
 ICON_B64 = "iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAtUExURRp4MCe1SDXxYBFQIAAAABFQHyOgPzDdWBVjJw09GCzJUCOhQCOgQB6MNwAAADCXHjcAAAAPdFJOU///////////////////ANTcmKEAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAFBhaW50Lk5FVCA1LjEuNBLfpoMAAAC2ZVhJZklJKgAIAAAABQAaAQUAAQAAAEoAAAAbAQUAAQAAAFIAAAAoAQMAAQAAAAIAAAAxAQIAEAAAAFoAAABphwQAAQAAAGoAAAAAAAAAYAAAAAEAAABgAAAAAQAAAFBhaW50Lk5FVCA1LjEuNAADAACQBwAEAAAAMDIzMAGgAwABAAAAAQAAAAWgBAABAAAAlAAAAAAAAAACAAEAAgAEAAAAUjk4AAIABwAEAAAAMDEwMAAAAADX5rshveZftAAAAMBJREFUOE/VlNkOgzAMBDGYI1D4/8+ts1lzKASVSpXoPGDFHrQkIKrlQ/5MrCRjP2U1pM4Qjoz7IkcZHD9HbFRRDdUGlWOKdoTotnuxRfXDTNcutnqRIQSRsa5HkRAGkT72OyhJnGJjUrWKSDyCrV/oQ7kperRFebSvT6JLZNElfitiM4ltM05hM9vxOIXoa/EQPYcwl6L9owCd6uFGKrga7Bv+6hIcn4lHOH6EGOFshW3wnchf0wrb4CBe8XxxWd550jU2Uc8RoQAAAABJRU5ErkJggg=="
 
@@ -93,10 +93,9 @@ def entry_out(e):
 entry.bind("<FocusOut>", entry_out)
 
 def pick():
+    global selected_paths
     paths = filedialog.askopenfilenames(filetypes=filetypes)
-    for path in selected_paths:
-        selected_paths.remove(path)
-
+    selected_paths = list(paths)
     paths_str = ""
 
     for path in paths:
@@ -104,7 +103,6 @@ def pick():
             paths_str = os.path.basename(path)
         else:
             paths_str = paths_str + ", " + os.path.basename(path)
-        selected_paths.insert(len(selected_paths), path)
 
     path_str = paths_str
     #path_tip['text'] = path_str
@@ -115,6 +113,8 @@ def pick():
         path_label['text'] = str(len(selected_paths)) + " files selected."   
 
 def convert_files():
+    global output_copy
+    global path_cache
 
     full_output = []
         
@@ -190,6 +190,7 @@ def convert_files():
             output_label['text'] =  "1 converted file to copy."
 
 def convert_link():
+    global output_copy
     if entered_link.get() != "":
         i = entered_link.get()
 
@@ -226,6 +227,7 @@ def convert_link():
 
 def copy():
     status_label['text'] = "Copied to clipboard."
+    print(output_copy)
     pyperclip.copy(output_copy)
 
 def clear():
